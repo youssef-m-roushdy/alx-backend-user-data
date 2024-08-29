@@ -3,9 +3,11 @@
 Module for filtering sensitive information from log messages.
 """
 import re
+from typing import List
 
 
-def filter_datum(fields, redaction, message, separator):
+def filter_datum(fields: List[str], redaction: str,
+                 message: str, separator: str) -> str:
     """
     Replaces sensitive fields in a log message with a redaction.
     """
