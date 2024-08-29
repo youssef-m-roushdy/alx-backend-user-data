@@ -10,7 +10,7 @@ def filter_datum(fields, redaction, message, separator):
     Function to filter message
     """
     for field in fields:
-        pattern = r'{}=.{}'.format(re.escape(field), re.escape(separator))
+        pattern = r'{}=.*?{}'.format(re.escape(field), re.escape(separator))
         message = re.sub(pattern, f'{field}={redaction}{separator}', message)
 
     return message
