@@ -4,6 +4,7 @@ Authentication module for handling user authorization
 and authentication in a Flask app.
 """
 from api.v1.auth.auth import Auth
+import base64
 
 
 class BasicAuth(Auth):
@@ -31,3 +32,18 @@ class BasicAuth(Auth):
 
         # Return the Base64 encoded token
         return data[1]
+
+    def decode_base64_authorization_header(self, base64_authorization_header: str) -> str:
+        if not base64_authorization_header:
+            return None
+        if not isinstance(base64_authorization_header, str):
+            return None
+        try:
+            if self.extract_base64_authorization_header(base64_authorization_header):
+                base64_authorization_header = self.extract_base64_authorization_header(base64_authorization_header)
+            # Decode the base64 part
+            decoded_bytes = base64.b64decode(base64_authorization_header)
+            # Convert bytes to UTF-8 string
+            return decoded_bytes.decode('utf-8')
+        except (IndexError, base64.binascii.Error, UnicodeDecodeError):
+            return None
