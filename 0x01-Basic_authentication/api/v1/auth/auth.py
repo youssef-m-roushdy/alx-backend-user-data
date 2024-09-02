@@ -24,3 +24,4 @@ class Auth:
         Manage current user auth
         """
         return None
+    
