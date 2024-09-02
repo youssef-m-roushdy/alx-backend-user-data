@@ -31,4 +31,4 @@ def unauthorized() -> str:
     """ GET /api/v1/unauthorized
     """
     abort(401, description="Unauthorized access")
-    return jsonify({"error": "Unauthorized"}) 
+    return jsonify({"error": "Unauthorized"})
