@@ -32,10 +32,10 @@ class Auth:
         """
         Retrieves the authorization header from the request.
         """
-        if request is None:
+        if not request:
             return None
 
-        if request.headers.get('Authorization') is None:
+        if not request.headers.get('Authorization'):
             return None
         else:
             return request.headers.get('Authorization')
