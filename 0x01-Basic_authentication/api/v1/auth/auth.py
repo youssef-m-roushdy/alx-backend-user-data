@@ -49,4 +49,7 @@ class Auth:
 
 
 class BasicAuth(Auth):
+    """
+    A class for basic authentication that inherits from Auth.
+    """
     pass
