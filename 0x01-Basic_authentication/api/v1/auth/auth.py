@@ -45,10 +45,3 @@ class Auth:
         Retrieves the current user from the request.
         """
         return None
-
-
-class BasicAuth(Auth):
-    """
-    A class for basic authentication that inherits from Auth.
-    """
-    pass
