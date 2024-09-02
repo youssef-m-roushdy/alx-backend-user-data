@@ -38,6 +38,7 @@ def before_request():
         return jsonify({"error": "Unauthorized"}), 401
     if auth.current_user(request) is None:
         return jsonify({"error": "Forbidden"}), 403
+    return
 
 
 @app.errorhandler(404)
