@@ -42,10 +42,14 @@ class BasicAuth(Auth):
         if not isinstance(base64_authorization_header, str):
             return None
         try:
-            if self.extract_base64_authorization_header(base64_authorization_header):
-                base64_authorization_header = self.extract_base64_authorization_header(base64_authorization_header)
             # Decode the base64 part
-            decoded_bytes = base64.b64decode(base64_authorization_header)
+            if self.extract_base64_authorization_header(b64_a_h):
+                b64_a_h = self.extract_base64_authorization_header(
+                    base64_authorization_header)
+                decoded_bytes = base64.b64decode(b64_a_h)
+            else:
+                decoded_bytes = base64.b64decode(base64_authorization_header)
+
             # Convert bytes to UTF-8 string
             return decoded_bytes.decode('utf-8')
         except (IndexError, base64.binascii.Error, UnicodeDecodeError):
