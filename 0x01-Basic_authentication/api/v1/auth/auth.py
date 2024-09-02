@@ -5,6 +5,7 @@ and authentication in a Flask app.
 """
 from flask import request
 from typing import List, TypeVar
+import os
 
 
 class Auth:
@@ -45,3 +46,7 @@ class Auth:
         Retrieves the current user from the request.
         """
         return None
+
+
+class BasicAuth(Auth):
+    pass
