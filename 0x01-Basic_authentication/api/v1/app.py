@@ -25,6 +25,9 @@ if auth_type:
 
 @app.before_request
 def before_request():
+    """
+    Handle requests before they reach the view functions.
+    """
     if auth is None:
         return
     if auth.require_auth(request.path, ['/api/v1/status/',
