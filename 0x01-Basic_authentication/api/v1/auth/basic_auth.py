@@ -33,7 +33,9 @@ class BasicAuth(Auth):
         # Return the Base64 encoded token
         return data[1]
 
-    def decode_base64_authorization_header(self, base64_authorization_header: str) -> str:
+    def decode_base64_authorization_header(self,
+                                           base64_authorization_header: str
+                                           ) -> str:
         """
         Method returns the decoded value of a Base64 string.
         """
@@ -43,13 +45,7 @@ class BasicAuth(Auth):
             return None
         try:
             # Decode the base64 part
-            if self.extract_base64_authorization_header(b64_a_h):
-                b64_a_h = self.extract_base64_authorization_header(
-                    base64_authorization_header)
-                decoded_bytes = base64.b64decode(b64_a_h)
-            else:
-                decoded_bytes = base64.b64decode(base64_authorization_header)
-
+            decoded_bytes = base64.b64decode(base64_authorization_header)
             # Convert bytes to UTF-8 string
             return decoded_bytes.decode('utf-8')
         except (IndexError, base64.binascii.Error, UnicodeDecodeError):
