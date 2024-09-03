@@ -5,6 +5,7 @@ and authentication in a Flask app.
 """
 from flask import request
 from typing import List, TypeVar
+import re
 
 
 class Auth:
@@ -21,10 +22,16 @@ class Auth:
         if not excluded_paths:
             return True
 
-        if path[-1] != '/':
-            path += '/'
-        if path in excluded_paths:
-            return False
+        for excluded_path in excluded_paths:
+            pattern = re.sub(r'\*$', '.*', excluded_path)
+
+            # Add optional trailing slash to the pattern
+            if excluded_path[-1] != '/':
+                pattern += '/?'
+
+            # Check if the path matches the regex pattern
+            if re.match(pattern, path):
+                return False
 
         return True
 
