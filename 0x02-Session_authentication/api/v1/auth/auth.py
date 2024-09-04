@@ -6,6 +6,7 @@ and authentication in a Flask app.
 from flask import request
 from typing import List, TypeVar
 import re
+import os
 
 
 class Auth:
@@ -55,3 +56,15 @@ class Auth:
         Retrieves the current user from the request.
         """
         return None
+
+    def session_cookie(self, request=None):
+        """
+        Method that returns a cookie value from a request
+        """
+        if not request:
+            return None
+        session_name = os.getenv('SESSION_NAME', '_my_session_id')
+        print(session_name)
+
+        cookie_value = request.cookies.get(session_name)
+        return cookie_value
