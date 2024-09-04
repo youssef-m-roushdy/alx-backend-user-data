@@ -37,9 +37,12 @@ def before_request():
         return
     if not auth.require_auth(request.path, ['/api/v1/status/',
                                             '/api/v1/unauthorized/',
-                                            '/api/v1/forbidden/']):
+                                            '/api/v1/forbidden/',
+                                            '/api/v1/auth_session/login/']):
         return
-    if auth.authorization_header(request) is None:
+    if not auth.authorization_header(
+        request) and not auth.session_cookie(
+            request):
         return jsonify({"error": "Unauthorized"}), 401
 
     if auth.current_user(request) is None:
