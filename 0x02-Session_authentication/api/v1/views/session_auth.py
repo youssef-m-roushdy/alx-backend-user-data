@@ -31,3 +31,22 @@ def login() -> str:
             return resp
 
     return jsonify({"error": "wrong password"}), 401
+
+
+@app_views.route('/api/v1/auth_session/logout',
+                 methods=['DELETE'], strict_slashes=False)
+def delete_session() -> str:
+    """
+    Deletes the user's session by invoking the destroy_session method.
+    If the session is not found or
+    cannot be deleted, a 404 error is returned.
+
+    Returns:
+        Empty JSON response with a 200 status if the session
+        is successfully deleted.
+        Otherwise, returns a 404 error if the session could not be destroyed.
+    """
+    from api.v1.app import auth
+    if not auth.destroy_session(request):
+        abort(404)
+    return jsonify({}), 200
