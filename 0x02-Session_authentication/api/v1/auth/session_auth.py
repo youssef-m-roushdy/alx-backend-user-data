@@ -30,7 +30,6 @@ class SessionAuth(Auth):
         if not session_id or not isinstance(session_id, str):
             return None
         user_id = self.user_id_by_session_id.get(session_id)
-        print(user_id)
         return user_id
 
     def current_user(self, request=None):

@@ -32,7 +32,6 @@ class Auth:
             # Add optional trailing slash to the pattern
             if excluded_path[-1] != '/':
                 pattern += '/?'
-            print(path)
             # Check if the path matches the regex pattern
             if re.match(pattern, path):
                 return False
@@ -64,6 +63,7 @@ class Auth:
         if not request:
             return None
         session_name = os.getenv('SESSION_NAME', '_my_session_id')
+        
 
         cookie_value = request.cookies.get(session_name)
         return cookie_value
