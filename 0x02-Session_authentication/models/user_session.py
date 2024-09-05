@@ -3,7 +3,11 @@
 """
 from models.base import Base
 
+
 class UserSession(Base):
+    """
+    UserSession Class
+    """
     def __init__(self, *args: list, **kwargs: dict):
         """ Initialize a User instance
         """
