@@ -42,7 +42,12 @@ class DB:
         Returns:
             User: The newly created User object.
         """
-        user = User(email=email, hashed_password=hashed_password)
-        self._session.add(user)
-        self._session.commit()
-        return user
+        session = self._session
+        try:
+            new_user = User(email=email, hashed_password=hashed_password)
+            session.add(user)
+            session.commit()
+        except Exception:
+            session.rollback()
+            new_user = None
+        return new_user
