@@ -30,8 +30,7 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """
-        Creates new User instance and
+        """ Creates new User instance and
             saves them to the database.
             Args:
                 - email
