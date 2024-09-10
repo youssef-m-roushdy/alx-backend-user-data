@@ -5,7 +5,7 @@ Hash a password
 import bcrypt
 
 
-def _hash_password(password: str) -> str:
+def _hash_password(password: str) -> bytes:
     """ Hash a password using bcrypt """
-    hashed_password = str(bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     return hashed_password
