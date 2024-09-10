@@ -31,15 +31,13 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """
-        Adds a new user to the database.
-
-        Args:
-            email (str): The email of the user to be added.
-            hashed_password (str): The hashed password of the user.
-
-        Returns:
-            User: The newly created User object.
+        """ Creates new User instance and
+            saves them to the database.
+            Args:
+                - email
+                - hashed_password
+            Return:
+                - new User object
         """
         session = self._session
         try:
