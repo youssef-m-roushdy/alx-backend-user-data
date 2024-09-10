@@ -2,9 +2,10 @@
 """DB module
 """
 from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from user import Base, User
+from user import User, Base
 
 
 class DB:
@@ -14,7 +15,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db")
+        self._engine = create_engine("sqlite:///a.db", echo=True)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -29,13 +30,15 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """ Creates new User instance and
-            saves them to the database.
-            Args:
-                - email
-                - hashed_password
-            Return:
-                - new User object
+        """
+        Adds a new user to the database.
+
+        Args:
+            email (str): The email of the user to be added.
+            hashed_password (str): The hashed password of the user.
+
+        Returns:
+            User: The newly created User object.
         """
         session = self._session
         try:
