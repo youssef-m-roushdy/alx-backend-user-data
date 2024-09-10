@@ -74,9 +74,13 @@ class DB:
         return user
 
     def update_user(self, user_id: int, **kwargs) -> None:
+        """ Searches for user instance using given id parameter
+            Args:
+                - user_id: user's id
+            Return:
+                - User instance found
         """
-        """
-        user = self.find_user_by(user_id)
+        user = self.find_user_by(id=user_id)
         session = self._session
         for attr, val in kwargs.items():
             if not hasattr(User, attr):
