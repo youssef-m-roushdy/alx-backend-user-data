@@ -22,7 +22,7 @@ def home():
 def users():
     """
     New user signup endpoint.
-    
+
     Form fields:
         - email
         - password
@@ -44,10 +44,10 @@ def login():
     """
     email = request.form.get('email')
     password = request.form.get('password')
-    
+
     if not AUTH.valid_login(email, password):
         abort(401)
-    
+
     session_id = AUTH.create_session(email)
     response = make_response(
         jsonify({"email": email, "message": "logged in"})
@@ -63,7 +63,7 @@ def logout():
     redirecting them to the home page.
     """
     session_id = request.cookies.get("session_id")
-    
+
     if not session_id:
         abort(403)
 
