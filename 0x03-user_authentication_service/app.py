@@ -3,7 +3,7 @@
 Flask app that returns a welcome message.
 """
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, make_response
 from auth import Auth
 
 app = Flask(__name__)
@@ -45,8 +45,11 @@ def login():
     if not AUTH.valid_login(email, password):
         abort(401)
     else:
-        AUTH.create_session(email)
-        return jsonify({"email": email, "message": "logged in"})
+        session_id = AUTH.create_session(email)
+        response = make_response(
+            jsonify({"email": email, "message": "logged in"}))
+        response.set_cookie(session_id)
+        return response
 
 
 if __name__ == "__main__":
