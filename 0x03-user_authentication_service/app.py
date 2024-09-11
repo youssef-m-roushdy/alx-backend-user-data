@@ -69,7 +69,7 @@ def logout():
     AUTH.destroy_session(session_id)
 
     response = make_response(redirect('/'))
-    response.delete_cookie('session_id')
+    response.delete_cookie(session_id)
     return response
 
 
