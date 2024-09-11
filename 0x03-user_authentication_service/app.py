@@ -19,7 +19,7 @@ def bienvenue():
 
 
 @app.route('/users', methods=['POST'])
-def create_user():
+def users():
     """
     Register a new user with email and password.
     """
