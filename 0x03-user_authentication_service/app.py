@@ -53,14 +53,14 @@ def login():
 
 
 @app.route('/sessions/<session_id>', methods=['DELETE'])
-def logout(session_id: str):
+def delete_session(session_id: str):
     """
     Deletes a user session based on the provided session ID.
     """
     try:
         Auth.destroy_session(session_id)
-        redirect('/')
-    except:
+        return redirect('/')
+    except Exception as e:
         abort(403)
 
 
