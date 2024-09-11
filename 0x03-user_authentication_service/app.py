@@ -20,8 +20,10 @@ def bienvenue():
 
 @app.route('/users', methods=['POST'])
 def users():
-    """
-    Register a new user with email and password.
+    """ New user signup endpoint
+        Form fields:
+            - email
+            - password
     """
     email = request.form.get('email')
     password = request.form.get('password')
