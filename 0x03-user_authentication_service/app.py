@@ -3,7 +3,7 @@
 Flask app that returns a welcome message.
 """
 
-from flask import Flask, jsonify, request, abort, make_response, redirect
+from flask import Flask, jsonify, request, abort, make_response, redirect, url_for
 from auth import Auth
 
 app = Flask(__name__)
@@ -63,7 +63,7 @@ def logout(session_id: str):
     if not user:
         abort(403)
     AUTH.destroy_session(session_id)
-    return redirect("/")
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":
