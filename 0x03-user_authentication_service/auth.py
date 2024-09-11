@@ -75,6 +75,8 @@ class Auth:
         Retrieves a user based on their session ID.
         """
         db = self._db
-        if not session_id or not db.find_user_by(session_id=session_id):
+        if not session_id:
             return None
-        return db.find_user_by(session_id=session_id)
+
+        user = db.find_user_by(session_id=session_id)
+        return user if user else None
