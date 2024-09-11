@@ -79,7 +79,7 @@ class Auth:
         if not session_id:
             return None
         try:
-            db.find_user_by(session_id=session_id)
-            return db.find_user_by(session_id=session_id)
+            user = db.find_user_by(session_id=session_id)
         except Exception:
             return None
+        return user
