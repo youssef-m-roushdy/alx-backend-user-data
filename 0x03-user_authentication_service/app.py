@@ -54,8 +54,9 @@ def login():
 
 @app.route('/sessions', methods=['DELETE'])
 def logout(session_id: str):
-    """
-    Deletes a user session based on the provided session ID.
+    """ Logout endpoint
+        Return:
+            - redirect to home page
     """
     session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
