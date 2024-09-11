@@ -20,10 +20,12 @@ def home():
 
 @app.route('/users', methods=['POST'])
 def users():
-    """ New user signup endpoint
-        Form fields:
-            - email
-            - password
+    """
+    New user signup endpoint.
+    
+    Form fields:
+        - email
+        - password
     """
     email = request.form.get('email')
     password = request.form.get('password')
@@ -38,18 +40,20 @@ def users():
 @app.route('/sessions', methods=['POST'])
 def login():
     """
-    Validates user login using email and password with creating a session.
+    Validates user login using email and password, and creates a session.
     """
     email = request.form.get('email')
     password = request.form.get('password')
+    
     if not AUTH.valid_login(email, password):
         abort(401)
-    else:
-        session_id = AUTH.create_session(email)
-        response = make_response(
-            jsonify({"email": email, "message": "logged in"}))
-        response.set_cookie(session_id)
-        return response
+    
+    session_id = AUTH.create_session(email)
+    response = make_response(
+        jsonify({"email": email, "message": "logged in"})
+    )
+    response.set_cookie('session_id', session_id, httponly=True, secure=True)
+    return response
 
 
 @app.route('/sessions', methods=['DELETE'])
@@ -59,6 +63,7 @@ def logout():
     redirecting them to the home page.
     """
     session_id = request.cookies.get("session_id")
+    
     if not session_id:
         abort(403)
 
@@ -68,7 +73,7 @@ def logout():
             abort(403)
 
         AUTH.destroy_session(session_id)
-    except Exception as e:
+    except Exception:
         abort(403)
 
     response = make_response(redirect('/'))
