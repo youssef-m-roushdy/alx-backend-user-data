@@ -64,10 +64,9 @@ def logout():
 
     try:
         user = AUTH.get_user_from_session_id(session_id)
+        AUTH.destroy_session(session_id)
     except Exception:
         abort(403)
-
-    AUTH.destroy_session(session_id)
 
     response = make_response(redirect('/'))
     response.delete_cookie(session_id)
