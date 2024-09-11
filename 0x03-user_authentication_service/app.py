@@ -60,16 +60,16 @@ def logout():
     """
     session_id = request.cookies.get("session_id")
     if not session_id:
-        abort(403, description="Session ID is missing")
+        abort(403)
 
     try:
         user = AUTH.get_user_from_session_id(session_id)
         if not user:
-            abort(403, description="Invalid session")
+            abort(403)
 
         AUTH.destroy_session(session_id)
     except Exception as e:
-        abort(403, description="Failed to log out due to an error")
+        abort(403)
 
     response = make_response(redirect('/'))
     response.delete_cookie('session_id')
