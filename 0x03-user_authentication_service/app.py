@@ -52,29 +52,20 @@ def login():
         return response
 
 
-@app.route('/sessions/<session_id>', methods=['DELETE'])
+@app.route('/sessions', methods=['DELETE'])
 def logout(session_id: str):
     """
     Deletes a user session based on the provided session ID.
     """
-    session_id = request.cookies.get('session_id')
-    
-    if not session_id:
-        abort(403)  # Forbidden if no session ID is present
-
+    session_id = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id)
     try:
-        user = Auth.get_user_from_session_id(session_id)
-        if user:
-            Auth.destroy_session(session_id)
-            response = make_response(redirect('/'))
-            response.set_cookie('session_id', '', expires=0)  # Clear the session cookie
-            return response
-        else:
-            abort(403)  # Forbidden if the session ID does not match any user
+        deleted_session = AUTH.destroy_session(session_id)
+        response = make_response(redirect('/'))
+        response.set_cookie(deleted_session)
+        return response
     except Exception as e:
-        # Optionally log the exception
-        print(f"Error during logout: {e}")
-        abort(403)  # Forbidden if an error occurs
+        abort(403)
 
 
 if __name__ == "__main__":
