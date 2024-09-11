@@ -3,7 +3,7 @@
 Flask app that returns a welcome message.
 """
 
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, jsonify, request, abort, make_response, redirect
 from auth import Auth
 
 app = Flask(__name__)
@@ -50,6 +50,18 @@ def login():
             jsonify({"email": email, "message": "logged in"}))
         response.set_cookie(session_id)
         return response
+
+
+@app.route('/sessions/<session_id>', methods=['DELETE'])
+def logout(session_id: str):
+    """
+    Deletes a user session based on the provided session ID.
+    """
+    try:
+        Auth.destroy_session(session_id)
+        redirect('/')
+    except:
+        abort(403)
 
 
 if __name__ == "__main__":
