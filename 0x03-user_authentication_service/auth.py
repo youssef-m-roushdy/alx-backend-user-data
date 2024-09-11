@@ -81,5 +81,5 @@ class Auth:
         try:
             db.find_user_by(session_id=session_id)
             return db.find_user_by(session_id=session_id)
-        except NoResultFound:
+        except Exception:
             return None
