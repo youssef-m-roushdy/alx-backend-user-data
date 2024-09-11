@@ -129,3 +129,4 @@ class Auth:
             db.update_user(user.id, hashed_password=hashed_password)
         except Exception:
             raise ValueError
+        return None
