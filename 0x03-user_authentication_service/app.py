@@ -54,21 +54,25 @@ def login():
 
 @app.route('/sessions', methods=['DELETE'])
 def logout():
-    """Logout endpoint
-       Return:
-           - redirect to home page
+    """
+    Logs out a user by destroying their session and
+    redirecting them to the home page.
     """
     session_id = request.cookies.get("session_id")
+    if not session_id:
+        abort(403, description="Session ID is missing")
+
     try:
         user = AUTH.get_user_from_session_id(session_id)
         if not user:
-            abort(403)
+            abort(403, description="Invalid session")
+
         AUTH.destroy_session(session_id)
-    except Exception:
-        abort(403)
+    except Exception as e:
+        abort(403, description="Failed to log out due to an error")
 
     response = make_response(redirect('/'))
-    response.delete_cookie(session_id)
+    response.delete_cookie('session_id')
     return response
 
 
