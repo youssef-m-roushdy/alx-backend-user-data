@@ -59,9 +59,6 @@ def logout():
            - redirect to home page
     """
     session_id = request.cookies.get("session_id")
-    if not session_id:
-        abort(403)
-
     try:
         user = AUTH.get_user_from_session_id(session_id)
         AUTH.destroy_session(session_id)
