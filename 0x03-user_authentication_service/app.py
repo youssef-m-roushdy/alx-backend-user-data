@@ -57,13 +57,24 @@ def logout(session_id: str):
     """
     Deletes a user session based on the provided session ID.
     """
+    session_id = request.cookies.get('session_id')
+    
+    if not session_id:
+        abort(403)  # Forbidden if no session ID is present
+
     try:
-        Auth.destroy_session(session_id)
-        response = make_response(redirect('/'))
-        response.set_cookie('session_id', '', expires=0)
-        return response
+        user = Auth.get_user_from_session_id(session_id)
+        if user:
+            Auth.destroy_session(session_id)
+            response = make_response(redirect('/'))
+            response.set_cookie('session_id', '', expires=0)  # Clear the session cookie
+            return response
+        else:
+            abort(403)  # Forbidden if the session ID does not match any user
     except Exception as e:
-        abort(403)
+        # Optionally log the exception
+        print(f"Error during logout: {e}")
+        abort(403)  # Forbidden if an error occurs
 
 
 if __name__ == "__main__":
