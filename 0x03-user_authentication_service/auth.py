@@ -126,6 +126,6 @@ class Auth:
         try:
             user = db.find_user_by(reset_token=reset_token)
             hashed_password = _hash_password(password)
-            db.update_user(user.id, hashed_password=hashed_password, reset_token=None)
         except Exception:
             raise ValueError
+        db.update_user(user.id, hashed_password=hashed_password, reset_token=None)
