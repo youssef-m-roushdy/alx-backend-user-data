@@ -11,7 +11,7 @@ AUTH = Auth()
 
 
 @app.route('/')
-def bienvenue():
+def home():
     """
     Returns a welcome message in JSON format.
     """
