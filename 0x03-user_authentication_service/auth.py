@@ -104,5 +104,6 @@ class Auth:
             user = db.find_user_by(email=email)
             reset_token = _generate_uuid()
             db.update_user(user.id, session_id=reset_token)
+            return reset_token
         except NoResultFound:
             raise ValueError
